@@ -1,10 +1,10 @@
 /**
  * 
  */
-var serverHost = "g-engine-select-20201229.appspot.com";// "spring-gcloud-20201205.wl.r.appspot.com";
-var serverPort = "443";
+var serverHost = "";//"g-engine-select-20201229.appspot.com";
+var serverPort = "";//"443";
 var apiKey = ""; //"AIzaSyBZR4KJn8qhpGMsjUFM6IJhuFdrfxkm1cA";
-var restBaseUrl = "https://" + serverHost;
+var restBaseUrl = ""; //"https://" + serverHost;
 var stompClient = null;
 var playerStompClient = null;
 var adminSStompClient = null;
@@ -22,10 +22,18 @@ var countTimer;
 
 $(document).ready(function() {
 	//DOM manipulation code
-	//serverHost = $("#server-host p").html();
-	//serverPort = $("#server-port p").html();
-	apiKey = "";//'?key=AIzaSyBZR4KJn8qhpGMsjUFM6IJhuFdrfxkm1cA'; // + $("#apikey").html();
-	restBaseUrl = "https://" + serverHost;
+	serverHost = $("#server-host p").html();
+	serverPort = $("#server-port p").html();
+	serverSSL = $("#server-ssl p").html();
+	if ((typeof serverPort !== 'undefined') && (serverPort != '')) {
+		serverHost = serverHost + ':' + serverPort;
+	}
+	apiKey = '?key=' + $("#apikey p").html();//'?key=AIzaSyBZR4KJn8qhpGMsjUFM6IJhuFdrfxkm1cA'; 
+	if ((typeof serverSSL !== 'undefined') && (serverSSL == 'true')) { 
+		restBaseUrl = "https://" + serverHost;
+	} else {
+		restBaseUrl = "http://" + serverHost;
+	}
 	console.log('REST API URL: ' + restBaseUrl);
 	hideHint();
 	createTimer();
@@ -48,7 +56,7 @@ function setConnected(connected) {
 	}
 	$("#greetings").html("");
 }
-
+/*
 function connect() {
 	var socket = new SockJS('/gs-guide-websocket');
 	stompClient = Stomp.over(socket);
@@ -66,7 +74,19 @@ function connect() {
 		});
 	});
 }
+*/
 
+function connect() {
+    var url = restBaseUrl + "/greeting" + apiKey;
+	var message = {'name':getCurrentUser()};
+	updateBanner(DEFAULT_BANNER_LOGO, 'brand-glow');
+	$.get(url, message, function (data, textStatus, jqXHR) {
+	    if (typeof data != 'undefined') {
+	    	//processMessage(JSON.parse(data))
+	    	console.log(data);			
+		}	
+	});		
+}
 
 function updateBanner(text, newClass) {
 	$("#banner-text").html(text);
@@ -130,8 +150,8 @@ function getCurrentUser() {
 }
 
 function sendName() {
-	console.log("Sending to /app/hello" + JSON.stringify({'name': getCurrentUser()}));
-	stompClient.send("/app/hello", {}, JSON.stringify({'name': getCurrentUser()}));
+	//console.log("Sending to /app/hello" + JSON.stringify({'name': getCurrentUser()}));
+	//stompClient.send("/app/hello", {}, JSON.stringify({'name': getCurrentUser()}));
 	var registrationCountdownValue = 0;
 	var url = restBaseUrl + "/getadmin" + apiKey;
 	var message = {'name':getCurrentUser(), 'action':'addPlayerAction'};

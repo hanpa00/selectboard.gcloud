@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,6 +34,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class GreetingController {
 
+	@Value("${server.host:localhost}")
+	private String serverHost;
+	
+	@Value("${server.port:8080}")
+	private String serverPort;
+	
+	@Value("${apiKey:}")
+	private String apiKey;
+	
+	@Value("${apiHttps:false}")
+	private boolean sslEnabled;
 	
 //	private static final String template = "Hello, %s!";
 	private static final String template = "%s";
@@ -79,11 +91,25 @@ public class GreetingController {
 	@GetMapping("/")
 	public String index(Model model) {
 
-		String serverhost = CacheData.getInputArgMap().get("--server.host");
-		String serverport = CacheData.getInputArgMap().get("--server.port");
 		
-		model.addAttribute("serverhost", serverhost);
-		model.addAttribute("serverport", serverport);
+		String host = CacheData.getInputArgMap().get("--server.host");
+		if ((host == null) || (host.isBlank())) {
+			host = serverHost;
+		}
+		String port = CacheData.getInputArgMap().get("--server.port");
+		if ((port == null) || (port.isBlank())) {
+			port = serverPort;
+		}
+		String key = CacheData.getInputArgMap().get("--apikey");
+		if ((key == null) || (key.isBlank())) {
+			key = apiKey;
+		}
+		
+		model.addAttribute("serverssl", sslEnabled);			
+		model.addAttribute("serverhost", host);
+		model.addAttribute("serverport", port);
+		model.addAttribute("apikey", key);
+		System.out.println("Thymeleaf data: " + model.toString());
 
 		return "index";
 	}
