@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Hello WebSocket</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel=stylesheet type="text/css" href="app.css">
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/countdowntimer.js"></script>
+<script src="/admin.js"></script>
+</head>
+<body>
+	<div id="myname" hidden=true>
+		<p th:text="'Hello, ' + ${name} + '!'" />
+	</div>
+	<div id="server-host" hidden=true>
+		<p th:text="${serverhost}">localhost</p>
+	</div>
+	<div id="server-port" hidden=true>
+		<p th:text="${serverport}">8080</p>
+	</div>
+	<div id="main-content" class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="connect">Connect to start:</label>
+						<button id="connect" class="btn btn-default" type="submit">Connect</button>
+						<button id="disconnect" class="btn btn-default" type="submit"
+							disabled="disabled">Disconnect</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="name">What is your name?</label> <input type="text"
+							id="name" class="form-control" placeholder="Your name here...">
+					</div>
+					<button id="send" class="btn btn-default" type="submit">Send</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="activePlayer">Active Player</label> <select
+							id="playerSelectList" name="Players">
+						</select> <input type="text" id="activePlayer" class="form-control"
+							placeholder="Player name to activate..." />
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-inline">
+					<button id="activatePlayer" class="btn btn-default" type="button">Activate</button>
+					<button id="deActivatePlayers" class="btn btn-default"
+						type="button">De-activate</button>
+					<button id="getPlayers" class="btn btn-default" type="button">Get
+						Players</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-inline">
+					<label for="categorySelectList">Categories</label>
+					<div class="form-group">
+						<select id="categorySelectList" name="Categories">
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-inline">
+					<button id="activateCategory" class="btn btn-default" type="button">Activate</button>
+					<button id="getCategories" class="btn btn-default" type="button">Get
+						Categories</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="hintUrl">Hint URL</label> <input type="text"
+							id="hintUrl" class="form-control" placeholder="Hint URL...">
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-inline">
+					<button id="showHint" class="btn btn-default" type="button">Show
+						Hint</button>
+					<button id="hideHint" class="btn btn-default" type="button">Hide
+						Hint</button>
+				</form>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="titleName">Title</label> <input type="text"
+							id="titleName" class="form-control" placeholder="title...">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="otherUrl">URL</label> <input type="text"
+							id="otherUrl" class="form-control" placeholder="url...">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="playPoints">Points</label> <input type="text"
+							id="playPoints" class="form-control" placeholder="points...">
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="playTime">Play Time (sec)</label> <input type="text"
+							id="playTime" class="form-control" value="60"
+							placeholder="Play time (sec)...">
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-inline">
+					<button id="startCountdownTimer" class="btn btn-default"
+						type="button">Start Timer</button>
+					<button id="stopCountdownTimer" class="btn btn-default"
+						type="button">Stop Timer</button>
+					<button id="resetCountdownTimer" class="btn btn-default"
+						type="button">Reset Timer</button>
+					<button id="hideCountdownTimer" class="btn btn-default"
+						type="button">Hide Timer</button>
+				</form>
+			</div>
+
+		</div>
+		<div id="timerdiv" class="row">
+			<div id="app-timer"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table id="conversation" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Order</th>
+							<th>Player Name</th>
+							<th>Score</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="answerOrder">
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+	</div>
+
+
+</body>
+</html>

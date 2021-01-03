@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Hello WebSocket</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel=stylesheet type="text/css" href="/app.css">
+<link rel=stylesheet type="text/css" href="/table.css">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/jquery-ui/jquery-ui.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/countdowntimer.js"></script>
+<script src="/app.js"></script>
+<script src="/table.js"></script>
+</head>
+<body>
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support
+			Javascript! Websocket relies on Javascript being enabled. Please
+			enable Javascript and reload this page!</h2>
+	</noscript>
+	<main>
+	<div id="audio-div" hidden=true>
+		<audio id="answerfirst" controls preload="auto">
+			<source src="audio/Winning-sound-effect.mp3" controls></source>
+			Your browser isn't invited for super fun audio time.
+		</audio>
+		<audio id="applause" controls preload="auto">
+			<source src="audio/applause3sec.mp3" controls></source>
+			Your browser isn't invited for super fun audio time.
+		</audio>
+	</div>
+
+	<div id="server-host" hidden=true>
+		<p th:text="${serverhost}">localhost</p>
+	</div>
+	<div id="server-port" hidden=true>
+		<p th:text="${serverport}">8080</p>
+	</div>
+	<div id="apikey" hidden=true>${apikey}</div>
+		
+	<header style="text-align: center">
+	<h3 id="banner-text" class="brand-glow" style="text-align: center">Code of Duty Got Talent!</h3>
+	</header>
+
+	<section class="hero">
+		<div class="flex-container2 wrapper">
+			<div class="flex-child">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="connect">Connect to start:</label>
+						<button id="connect" class="btn btn-default" type="submit">Connect</button>
+						<button id="disconnect" class="btn btn-default" type="submit"
+							disabled="disabled">Disconnect</button>
+					</div>
+				</form>
+			</div>
+			<div class="flex-child">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="name">What is your name?</label> <input type="text"
+							id="name" class="form-control" placeholder="Your name here...">
+						<button id="send" class="btn btn-default" type="submit">Send</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<div class="flex-container wrapper">
+		<section class="content">
+			<div id="container-box">
+				<div id="bg_mask1" hidden=true>
+					<div id="hint-overlay">
+						<div id="youtubepane">
+							<div id="youtubehint">
+								<p>Hint should be here</p>
+							</div>
+						</div>
+						<div id="titleinfo">
+							<h4 id="title"></h4>
+							<h4 id="points"></h4>
+							<h4>
+								<a id="hintUrl" href="" target="_blank"></a>
+							</h4>
+						</div>
+						<div>
+							<button id="hintButton" class="btn btn-default" type="button">Show
+								Hint</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="bg_mask2" hidden=true>
+					<div id="app-timer-overlay">
+						<div id="app-timer" style="">
+							<div class="base-timer">
+								<svg xmlns="http://www.w3.org/2000/svg" class="base-timer__svg"
+									viewBox="0 0 100 100">
+							  <g class="base-timer__circle">
+							    <circle class="base-timer__path-elapsed" cx="50" cy="50"
+										r="45" />
+							    <path id="base-timer-path-remaining"
+										stroke-dasharray="273 283"
+										class="base-timer__path-remaining ${remainingPathColor} green"
+										d="          M 50, 50          m -45, 0          a 45,45 0 1,0 90,0          a 45,45 0 1,0 -90,0        " />
+							  </g>
+							</svg>
+								<span id="base-timer-label" class="base-timer__label">0:58</span>
+							</div>
+						</div>
+						<div id="answerButton-panel">
+							<div id="answerButton-subpanel"
+								class="answerButton-subpanel answerButton-subpanel-hover answerButton-subpanel-active">
+								<button id="answerButton"></button>
+							</div>
+							<div id="buttonCaption">
+								<h3>Press Button to Submit Answer</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="bg_mask3" hidden=true>
+					<div id="answer-overlay">
+						<div id="titleinfo">
+							<h4 id="title"></h4>
+							<h4 id="points"></h4>							
+						</div>
+						<div>
+							<form class="form-inline">
+								<div class="form-group">
+									<label for="answer">What is your answer?</label> <input type="text"
+										id="answer" class="form-control" placeholder="Your answer here...">
+									<button id="sendAnswer" class="btn btn-default" type="submit">Send</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<div id="bg_mask4" hidden=true>
+					<div id="results-overlay">						
+						<div id="win-player" class="typewriter">
+							<h1>Winner: </h1>
+						</div>
+						<div id="win-points" class="typewriter">
+							<h1>Score: </h1>					
+						</div>
+						
+					</div>
+				</div>
+
+			</div>
+
+			<div>
+				<h3 id="score">Your Score:</h3>
+			</div>
+
+		</section>
+		<aside class="sidebar">
+			<table id="players" class="minimalistBlack">
+				<thead>
+					<tr>
+						<th style="width:60%; height:25px">Player</th>
+						<th style="width:40%; height:25px">Score</th>
+					</tr>
+				</thead>
+				<!-- 
+				<tfoot>
+				
+					<tr>
+						<td colspan="3">
+							<div class="links">
+								<a href="#">&laquo;</a> <a class="active" href="#">1</a> <a
+									href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a>
+							</div>
+						</td>
+					</tr>					
+				</tfoot>
+				 -->
+				<tbody id="playerlist">
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>										
+				</tbody>
+			</table>
+
+		</aside>
+	</div>
+	<footer>
+		<div></div>
+	</footer> </main>
+</body>
+</html>

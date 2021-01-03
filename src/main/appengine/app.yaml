@@ -1,0 +1,11 @@
+runtime: java11
+
+network:
+  session_affinity: true
+
+manual_scaling:
+  instances: 1
+
+env_variables:
+  API_KEY: "AIzaSyAfW_kdT1nttBph9dhE4r4wlPv0IjUEQ4Y"
+  SERVER_HOST: "spring-gcloud-20201205.wl.r.appspot.com"

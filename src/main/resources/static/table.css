@@ -1,0 +1,323 @@
+table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 2px 1px;
+}
+table.blueTable tbody td {
+  font-size: 10px;
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 11px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 1px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot {
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #D0E4F5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  border-top: 1px solid #444444;
+}
+table.blueTable tfoot td {
+  font-size: 11px;
+}
+table.blueTable tfoot .links {
+  text-align: right;
+}
+table.blueTable tfoot .links a{
+  display: inline-block;
+  background: #1C6EA4;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+table.minimalistBlack {
+  border: 3px solid #000000;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.minimalistBlack td, table.minimalistBlack th {
+  border: 1px solid #000000;
+  padding: 2px 1px;
+}
+table.minimalistBlack tbody td {
+  font-size: 13px;
+}
+table.minimalistBlack thead {
+  background: #CFCFCF;
+  background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  border-bottom: 3px solid #000000;
+}
+table.minimalistBlack thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+  height: 25px;
+}
+table.minimalistBlack tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  border-top: 3px solid #000000;
+}
+table.minimalistBlack tfoot td {
+  font-size: 14px;
+}
+
+table.minimalistBlack tr {
+  font-size: 12px;
+  text-align: center;
+  height: 20px;
+}
+
+
+div.blueTable {
+	background-color: #EEEEEE;
+	border: 1px solid #000000;
+	width: 932px;
+	height: 510px;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+.divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+	border: 1px solid #030303;
+	padding: 2px 2px;
+}
+
+.divTable.blueTable .divTableBody .divTableCell {
+	font-size: 13px;
+}
+
+.blueTable .tableFootStyle {
+	font-size: 14px;
+}
+
+.blueTable .tableFootStyle .links {
+	text-align: right;
+}
+
+.blueTable .tableFootStyle .links a {
+	display: inline-block;
+	background: #1C6EA4;
+	color: #FFFFFF;
+	padding: 2px 8px;
+	border-radius: 5px;
+}
+
+.blueTable.outerTableFooter {
+	border-top: none;
+}
+
+.blueTable.outerTableFooter .tableFootStyle {
+	padding: 3px 5px;
+}
+/* DivTable.com */
+.divTable {
+	display: table;
+}
+
+.divTableRow {
+	display: table-row;
+}
+
+.divTableHeading {
+	display: table-header-group;
+}
+
+.divTableCell, .divTableHead {
+	display: table-cell;
+}
+
+.divTableHeading {
+	display: table-header-group;
+}
+
+.divTableFoot {
+	display: table-footer-group;
+}
+
+.divTableBody {
+	display: table-row-group;
+}
+
+.grid-100 {
+	background-color: #26c71e;
+	border: 1px solid inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+.grid-100:hover {
+	border-width: 10px;
+	background-color: #11a30a;
+}
+
+.grid-100:active {
+	background-color: #11a30a;
+	box-shadow: 2px -3px black;
+	transform: translateY(2px) translateX(-3px);
+}
+
+.grid-200 {
+	background-color: #2f8bed;
+	border: 1px solid inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+.grid-200:hover {
+	border-width: 10px;
+	background-color: #2f32ed;
+}
+
+.grid-200:active {
+	background-color: #2f32ed;
+	box-shadow: 2px -3px black;
+	transform: translateY(2px) translateX(-3px);
+}
+
+.grid-300 {
+	background-color: #a42fed;
+	border: 1px solid inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+.grid-300:hover {
+	border-width: 10px;
+	background-color: #9717cf;
+}
+
+.grid-300:active {
+	background-color: #9717cf;
+	box-shadow: 2px -3px black;
+	transform: translateY(2px) translateX(-3px);
+}
+
+.grid-400 {
+	background-color: #eddd2f;
+	border: 1px solid inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+.grid-400:hover {
+	border-width: 10px;
+	background-color: #dbcb1a;
+}
+
+.grid-400:active {
+	background-color: #dbcb1a;
+	box-shadow: 2px -3px black;
+	transform: translateY(2px) translateX(-3px);
+}
+
+.grid-500 {
+	background-color: #f5b949;
+	border: 1px solid inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+.grid-500:hover {
+	border-width: 10px;
+	background-color: #cf9427;
+}
+
+.grid-500:active {
+	background-color: #cf9427;
+	box-shadow: 2px -3px black;
+	transform: translateY(2px) translateX(-3px);
+}
+
+.grid-600 {
+	background-color: #eb3838;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word
+}
+
+.dark-grid-100 {
+	background-color: #A1A1A1;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word
+}
+
+.dark-grid-200 {
+	background-color: #A1A1A1;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: reak-word
+}
+
+.dark-grid-300 {
+	background-color: #A1A1A1;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word
+}
+
+.dark-grid-400 {
+	background-color: #A1A1A1;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word
+}
+
+.dark-grid-500 {
+	background-color: #A1A1A1;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word
+}
+
+.dark-grid-600 {
+	background-color: #A1A1A1;
+	border-color: inherit;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word
+}

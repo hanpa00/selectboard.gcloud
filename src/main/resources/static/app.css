@@ -1,0 +1,465 @@
+.brand-glow {
+    position: relative;
+    place-items: center;
+    color: #fff;
+    text-align: center;
+    display: inline-block;
+    font-size: 2.1rem;
+    padding: 0;
+    white-space: nowrap;
+    font-family: 'Pacifico', cursive;
+    text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 6px #292736, 0 0 8px #292736, 0 0 10px #292736, 0 0 12px #292736, 0 0 14px #292736;
+    animation: glow .59s infinite alternate;
+}
+
+/* Animation as suggested by Ismail Ghallou */
+@keyframes glow {
+    to {
+     text-shadow: 0 0 4px #fff, 0 0 8px #fff, 0 0 12px #d25ed4, 0 0 16px #d25ed4, 0 0 20px #d25ed4, 0 0 24px #d25ed4, 0 0 28px #d25ed4;
+    }
+  }
+
+.brand-slidein {
+	position: relative;
+	place-items: center;
+	color: #fff;
+	text-align: center;
+	display: inline-block;
+	font-size: 2.1rem;
+	padding: 0;
+	white-space: nowrap;
+	font-family: 'Pacifico', cursive;
+	text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 6px #292736, 0 0 8px
+		#292736, 0 0 10px #292736, 0 0 12px #292736, 0 0 14px #292736;
+	animation-duration: 3s;
+	animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%; 
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+
+.typewriter h1 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  position: relative;
+  text-align: center;
+  transform: translateY(50%); 
+  animation: 
+    typing 3.5s steps(40, end),
+    blinkTextCursor 500ms steps(44) infinite normal,
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+
+
+main, section, aside, footer {
+    margin: 0;
+    padding: 10px;
+    background: #f4f5e6;
+    color: black;
+}
+
+header {
+    background: #131219;
+    margin: 10px;
+    padding: 10px;
+}
+
+.hero {
+    background: #f4f5e6;
+    margin: 10px;
+    padding: 10px;
+}
+
+.content {
+    background: #f4f5e6;
+    margin: 5px;
+    padding: 10px;
+    flex: 1;
+}
+
+.sidebar {
+    background: #f4f5e6;
+    flex: 0 1 400px;
+    margin: 5px;
+    padding-top: 10px;
+    color: black;
+}
+
+.flex-container {
+	display: flex;
+}
+
+.wrapper {
+	margin: auto;
+	max-width: 75rem;
+}
+
+
+.flex-container2 {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    border: 2px solid #f57900;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+} 
+
+#container-box {
+	position: relative;
+	border: 1px solid black;
+	width: 934px;
+	height: 512px;
+	background-repeat: no-repeat;
+	
+}
+
+#user-choice-confirm-dialog {
+	z-index: 10;
+}
+
+#bg_mask1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: gray;
+	z-index: 10;
+	place-items: center;
+	border: 1px solid black;
+}
+
+#hint-overlay {
+	position: relative;
+	float: top;
+	height: 100%;
+	width: 480px;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+}
+
+#youtubepane {
+	position: relative;
+	height: 320px;
+	width: 100%;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+	background: white;
+	border: 1px solid black;
+	text-align: center;
+}
+
+#youtubehint {
+	position: relative;
+	height: 420px;
+	width: 100%;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+	display: inline-block;
+}
+
+#titleinfo {
+	position: relative;
+	width: 100%;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+	background: white;
+	border: 1px solid black;
+}
+
+#bg_mask2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	backgound: wheat;
+	z-index: 10;
+	place-items: center;
+	border: 1px solid black;
+	background: white;
+}
+
+.grid {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: 1px solid #000;
+	display: inline-block;
+}
+
+
+
+#app-timer-overlay {
+	position: relative;
+	float: top;
+	height: 300px;
+	width: 600px;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+}
+
+#app-timer {
+	position: relative;
+	height: 300px;
+	width: 300px;
+	float: left;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+}
+
+
+#answerButton-panel {
+	position: relative;
+	background-position: center;
+	width: 300px;
+	height: 300px;
+	float: right;
+	margin: auto;
+	padding: 0px;
+	z-index: 15;
+	background-color: white;
+}
+
+#answerButton-subpanel {
+	position: relative;
+	background-position: center;
+	width: 165px;
+	height: 165px;
+	margin: auto;
+	padding: 5px;
+	z-index: 15;
+	box-shadow: 4px 3px;
+	background-color: #E5E3D0;
+}
+
+#answerButton-subpanel:hover {
+	background-color: #24F439;
+	z-index: 15;
+}
+
+#answerButton-subpanel:active {
+	background-color: #3e8e41;
+	z-index: 15;
+}
+
+
+.answerButton-subpanel {
+	position: relative;
+	background-position: center;
+	width: 165px;
+	height: 165px;
+	margin: auto;
+	padding: 5px;
+	z-index: 15;
+	box-shadow: 4px 3px;
+	background-color: #E5E3D0;
+}
+
+.answerButton-subpanel-hover:hover {
+	background-color: #24F439;
+	z-index: 15;
+}
+
+.answerButton-subpanel-active:active {
+	background-color: #3e8e41;
+	z-index: 15;
+}
+
+
+#answerButton {
+	position: relative;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url('images/Button-Red.svg');
+	width: 150px;
+	height: 150px;
+	padding: 0px;
+	z-index: 15;
+	border-radius: 100%;
+	box-shadow: 4px 3px;
+	border: none;
+}
+
+
+#answerButton:hover {
+	background-color: #8B8982;
+	z-index: 15;
+}
+
+#answerButton:active {
+	background-color: #3e8e41;
+	box-shadow: 1px 0px;
+	transform: translateY(2px) translateX(-3px);
+	z-index: 15;
+}
+
+
+
+#buttonCaption {
+	position: relative;
+	background-position: center;
+	width: 150px;
+	z-index: 10;
+	margin-bottom: 10%;
+	margin-left: 20%;
+}
+
+
+#bg_mask3 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: white;
+	z-index: 10;
+	place-items: center;
+	border: 1px solid black;
+}
+
+#answer-overlay {
+	position: relative;
+	float: top;
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+}
+
+
+
+#bg_mask4 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: white;
+	z-index: 10;
+	place-items: center;
+	border: 1px solid black;
+}
+
+
+#results-overlay {
+	position: relative;
+	float: top;
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	padding: 0px;
+	z-index: 10;
+}
+
+
+h3 {
+	text-align: center;
+}
+
+
+h4 {
+	text-align: center;
+}
+
+.body-timer {
+	font-family: sans-serif;
+	display: grid;
+	height: 100vh;
+	place-items: center;
+}
+
+.base-timer {
+	position: relative;
+	width: 300px;
+	height: 300px;
+}
+
+.base-timer__svg {
+	transform: scaleX(-1);
+}
+
+.base-timer__circle {
+	fill: none;
+	stroke: none;
+}
+
+.base-timer__path-elapsed {
+	stroke-width: 7px;
+	stroke: grey;
+}
+
+.base-timer__path-remaining {
+	stroke-width: 7px;
+	stroke-linecap: round;
+	transform: rotate(90deg);
+	transform-origin: center;
+	transition: 1s linear all;
+	fill-rule: nonzero;
+	stroke: currentColor;
+}
+
+.base-timer__path-remaining.green {
+	color: rgb(65, 184, 131);
+}
+
+.base-timer__path-remaining.orange {
+	color: orange;
+}
+
+.base-timer__path-remaining.red {
+	color: red;
+}
+
+.base-timer__label {
+	position: absolute;
+	width: 300px;
+	height: 300px;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 48px;
+}
