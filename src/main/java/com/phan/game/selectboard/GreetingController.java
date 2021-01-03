@@ -81,11 +81,10 @@ public class GreetingController {
 
 		String serverhost = CacheData.getInputArgMap().get("--server.host");
 		String serverport = CacheData.getInputArgMap().get("--server.port");
-		String apikey = CacheData.getInputArgMap().get("--apikey");
 		
 		model.addAttribute("serverhost", serverhost);
 		model.addAttribute("serverport", serverport);
-		model.addAttribute("apikey", apikey);
+
 		return "index";
 	}
 
