@@ -220,5 +220,67 @@
 			<div></div>
 		</footer>
 	</main>
+		
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-messaging.js"></script>
+
+<script>
+	function appendMessage(payload) {
+		console.log('Message: ' + payload.notification.body);		    
+		processMessage(JSON.parse(payload.notification.body));
+	}
+	
+	console.log('Initializing firebase');
+	var firebaseConfig = {
+			  "projectId": "fir-demo-84240",
+			  "appId": "1:334600601730:web:69d6eb0731d4703070349b",
+			  "storageBucket": "fir-demo-84240.appspot.com",
+			  "apiKey": "AIzaSyAgEjZfREN0137FJoKpdzSmEQac_yGEhXU",
+			  "authDomain": "fir-demo-84240.firebaseapp.com",
+			  "messagingSenderId": "334600601730",
+			  "measurementId": "G-22NMFT1SGB"
+			};
+	if (firebaseConfig) {
+		firebase.initializeApp(firebaseConfig);
+		console.log('firebase initialized');
+	}
+	var messaging;
+	try {
+		console.log('Calling firebase messaging');
+	   messaging = firebase.messaging();	 
+	   messaging.onMessage((payload) => {
+		    console.log('Message received. ', payload);
+		    // [START_EXCLUDE]
+		    // Update the UI to include the received message.
+		    appendMessage(payload);
+		    // [END_EXCLUDE]
+		  });
+	  
+	 } catch (error) {
+		 console.log('An error occurred while starting messaging. ', error);
+	 }
+	 
+	 //function getToken() {    		
+		 console.log('Getting token');
+		try {
+			messaging.getToken({vapidKey: 'BKKh91PixUVSljYjqc4V7H2EndQn6X9BTYiVAp9ZdUlZ-Amu12pzpgCuaJL83aY7QcRGimc7pJn59d1MB2_kveo'}).then((currentToken) => {
+			if (currentToken) {
+				console.log('Got token: ' + currentToken);    	
+				registrationToken = currentToken;
+			} else {
+	        // Show permission request.
+				console.log('No registration token available. Request permission to generate one.');        
+			}
+	    	}).catch((err) => {
+	      		console.log('An error occurred while retrieving token. ', err);
+	    	});
+	    // [END get_token]
+		 } catch (error) {
+			 console.log('An error occurred while starting messaging. ', error);
+		}
+	//}	
+	  
+	//getToken();	  
+</script>	  
 </body>
 </html>

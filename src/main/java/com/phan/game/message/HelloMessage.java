@@ -1,4 +1,4 @@
-package com.phan.game.selectboard;
+package com.phan.game.message;
 
 public class HelloMessage {
 

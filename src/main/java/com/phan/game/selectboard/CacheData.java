@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import com.phan.game.pojo.GridData;
 
 public class CacheData {
 
 	private final static HashMap<String, List<GridData>> categoryMap = new HashMap<>();
 	private static List<GridData> gridDataList = null;
-	private final static HashMap<String, String> inputArgMap = new HashMap<>();
+	private final static HashMap<String, String> inputArgMap = new HashMap<>();	
 	
 	public static final HashMap<String, List<GridData>> getCategoryMap() {
 		return categoryMap;

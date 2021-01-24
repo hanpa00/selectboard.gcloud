@@ -19,6 +19,7 @@ var activePlayer = null;
 var answerPosition = 0;
 var categoryChosen = false;
 var countTimer;
+var registrationToken;
 
 $(document).ready(function() {
 	//DOM manipulation code
@@ -78,7 +79,7 @@ function connect() {
 
 function connect() {
     var url = restBaseUrl + "/greeting" + apiKey;
-	var message = {'name':getCurrentUser()};
+	var message = {'name':getCurrentUser(), 'token':registrationToken};
 	updateBanner(DEFAULT_BANNER_LOGO, 'brand-glow');
 	$.get(url, message, function (data, textStatus, jqXHR) {
 	    if (typeof data != 'undefined') {

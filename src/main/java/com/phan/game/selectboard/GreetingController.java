@@ -1,24 +1,20 @@
 package com.phan.game.selectboard;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
-
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -29,6 +25,16 @@ import org.springframework.web.util.HtmlUtils;
 import org.springframework.ui.Model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.TopicManagementResponse;
+import com.phan.game.fcm.PushNotificationService;
+import com.phan.game.message.Greeting;
+import com.phan.game.message.HelloMessage;
+import com.phan.game.pojo.CategoryEntry;
+import com.phan.game.pojo.Player;
+
+import com.phan.game.message.PushNotificationRequest;
+import com.phan.game.message.PushNotificationResponse;
 
 
 @Controller
@@ -48,7 +54,7 @@ public class GreetingController {
 	
 //	private static final String template = "Hello, %s!";
 	private static final String template = "%s";
-	public static HashMap<String, Long> threadMap = new HashMap<String, Long>(); 
+	public static HashMap<String, Long> threadMap = new HashMap<String, Long>(); 	
 	private static SimpMessagingTemplate templateMsg; // needed by ad-hoc stomp client message
 	private static HashMap<String, Integer> playerScore = new HashMap<String, Integer>();
 	private static HashMap<Integer, Integer> teamScore = new HashMap<Integer, Integer>();
@@ -57,22 +63,77 @@ public class GreetingController {
 	private static ArrayList<Player> answerList = new ArrayList<Player>();
 	final AtomicLong counter = new AtomicLong();
 	final AtomicLong playerOrder = new AtomicLong();
-	private static HashMap<String, Long> playerRegistrationOrder = new HashMap<>();
-
-	@Autowired
-	public GreetingController(SimpMessagingTemplate template) {
-		System.out.println("GreetingController: Message Template = " + template.getDefaultDestination());
-		templateMsg = template;
-	}
+	private static HashMap<String, Long> playerRegistrationOrder = new HashMap<>();		
+	private static PushNotificationService pushNotificationService;
+	private static String topic = "selectboardtopic1";
+	private static String registrationToken;// = "eG5FS8h_rxpL3D9qF-KxMM:APA91bFrKBdBKudbUMYYc8werB4TLXqkQMRdXR4N2feL0360QxRc_gXtbyPzilzTIzhoz_uxczrv4L05-IwKF7RiHPW68EXL6Uh0Vt-x1-9skSrkC76bmYFs2LRLywYFpSgMVGsjwWQy";
+//	@Autowired
+//	public GreetingController(SimpMessagingTemplate template) {
+//		System.out.println("GreetingController: Message Template = " + template.getDefaultDestination());
+//		templateMsg = template;
+//		//pushNotificationService = (PushNotificationService)CacheData.pushNotificationService;
+//	}
 	
+	@Autowired
+	public GreetingController(PushNotificationService pushService) {
+		
+		//List<String> registrationTokens = Arrays.asList(registrationToken);
+				
+		System.out.println("GreetingController: pushService = " + pushService.toString());
+		pushNotificationService = pushService;
+//		try {
+//			TopicManagementResponse response = FirebaseMessaging.getInstance().subscribeToTopic(
+//					registrationTokens, topic);
+//			// See the TopicManagementResponse reference documentation
+//			// for the contents of response.
+//			System.out.println(response.getSuccessCount() + " tokens were subscribed successfully");
+//		} catch (Exception ex) {
+//			System.out.println(ex.getMessage());
+//		}
+
+	}
+
+
+    @PostMapping("/notification/topic")
+    public static ResponseEntity sendNotification(@RequestBody PushNotificationRequest request) {
+        pushNotificationService.sendPushNotificationWithoutData(request);
+        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    }
+
+    @PostMapping("/notification/token")
+    public static ResponseEntity sendTokenNotification(@RequestBody PushNotificationRequest request) {
+        pushNotificationService.sendPushNotificationToToken(request);
+        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    }
+
+    @PostMapping("/notification/data")
+    public static ResponseEntity sendDataNotification(@RequestBody PushNotificationRequest request) {
+        pushNotificationService.sendPushNotification(request);
+        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    }
+
+//    @GetMapping("/notification")
+//    public static ResponseEntity sendSampleNotification() {
+//        pushNotificationService.sendSamplePushNotification();
+//        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+//    }
+    
 	public static void postGreetingsTopic(Greeting greet) {
 		long id = Thread.currentThread().getId();
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String jsonGreet = objectMapper.writeValueAsString(greet);
 			System.out.println("ThreadID: " + id + " - postGreetingsTopic: " + jsonGreet);
-			templateMsg.convertAndSend("/topic/greetings", jsonGreet);
-		} catch (JsonProcessingException e) {
+			PushNotificationRequest request = new PushNotificationRequest();
+			request.setMessage(jsonGreet);
+			request.setTitle(greet.getAction());
+			request.setTopic(topic);
+			request.setToken(registrationToken);
+			System.out.println("ThreadID: " + id + " - request: " + request.toString());
+			//sendDataNotification(request);
+			sendTokenNotification(request);
+			//templateMsg.convertAndSend("/topic/greetings", jsonGreet);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -81,9 +142,11 @@ public class GreetingController {
 //	@GetMapping("/greeting", produces="application/json")
 	// Returs a JSON object
 	@RequestMapping(path="/greeting", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public @ResponseBody Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name,
+			@RequestParam(value = "token", defaultValue = "N/A") String token) {
 		long id = Thread.currentThread().getId();
-		System.out.println("ThreadID: " + id + " greeting");
+		System.out.println("ThreadID: " + id + " greeting - token=" + token);
+		registrationToken = token;
 		return new Greeting(String.format(template, name));
 	}
 	

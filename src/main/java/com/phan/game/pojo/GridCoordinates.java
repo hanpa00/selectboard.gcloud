@@ -1,4 +1,4 @@
-package com.phan.game.selectboard;
+package com.phan.game.pojo;
 
 public class GridCoordinates {
 

@@ -4,10 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.json.simple.JSONArray;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.ApplicationContext;import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+//import com.phan.game.fcm.PushNotificationService;
+import com.phan.game.pojo.GridData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -18,9 +22,10 @@ import java.util.List;
  *
  */
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.phan.game.selectboard", "com.phan.game.fcm"})
+@EnableScheduling
 public class App 
-{
-
+{	
 	public static void main( String[] args )
 	{
 		System.out.println( "Command Line arguments: " + args.length );
@@ -28,7 +33,6 @@ public class App
 			System.out.println(cmdArg);
 		}
 		SpringApplication.run(App.class, args);
-
 	}
 
 
@@ -43,11 +47,10 @@ public class App
 //			for (String beanName : beanNames) {
 //				System.out.println(beanName);
 //			}
-
+			//CacheData.pushNotificationService = (PushNotificationService)ctx.getBean(PushNotificationService.class);
 			readfileGridData("CoDGotTalentv3.csv");
 			CacheData.populateInputArgMap(args);
-			GameManager.buildStateGraph();
-
+			GameManager.buildStateGraph();			
 		};
 	}
 

@@ -1,56 +1,39 @@
-package com.phan.game.selectboard;
+package com.phan.game.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public class CategoryEntry {
+//@JsonPropertyOrder({ "title", "URL", "embeddedURL", "category", "author", "points" })
+public class GridData {
 
 	private String title;
 	private String url;
 	private String embeddedUrl;
 	private String category;
 	private String author;
-	private Integer points;
-	private String hint1;
-	private String hint2;
+	private String points;
+	@JsonIgnore
 	private Boolean played;
-	private Integer remaining;
-	
-	public CategoryEntry() {
+
+	public GridData() {
 		this.title = "title";
 		this.url = "http://localhost";
 		this.embeddedUrl = "http://localhost";
 		this.category = "category";
 		this.author = "author";
-		this.points = 0;
-		this.hint1 = "hint1";
-		this.hint2 = "hint2";
+		this.points = "0";
 		this.played = false;
-		this.remaining = 0;
+		
 	}
 	
-	public CategoryEntry(String title, String URL, String embeddedURL, String category,  String author, Integer points) {
+	public GridData(String title, String URL, String embeddedURL, String category,  String author, String points) {
 		this.title = title;
 		this.url = URL;
 		this.embeddedUrl = embeddedURL;
 		this.category = category;
 		this.author = author;
 		this.points = points;
-		this.hint1 = "";
-		this.hint2 = "";
 		this.played = false;
-		this.remaining = 0;
-	}
-	
-	public CategoryEntry(GridData data) {
-		this.title = data.getTitle();
-		this.url = data.getUrl();
-		this.embeddedUrl = data.getEmbeddedUrl();
-		this.category = data.getCategory();
-		this.author = data.getAuthor();
-		this.points = Integer.parseInt(data.getPoints());
-		this.hint1 = "";
-		this.hint2 = "";
-		this.played = false;
-		this.remaining = 0;
 	}
 	
 
@@ -79,11 +62,11 @@ public class CategoryEntry {
 		this.author = author;
 	}
 	
-	public Integer getPoints() {
+	public String getPoints() {
 		return points;
 	}
 
-	public void setPoints(Integer points) {
+	public void setPoints(String points) {
 		this.points = points;
 	}
 
@@ -103,22 +86,6 @@ public class CategoryEntry {
 		this.embeddedUrl = embeddedURL;
 	}
 	
-	public String getHint1() {
-		return hint1;
-	}
-
-	public void setHint1(String hint1) {
-		this.hint1 = hint1;
-	}
-
-	public String getHint2() {
-		return hint2;
-	}
-
-	public void setHint2(String hint2) {
-		this.hint2 = hint2;
-	}
-
 	public Boolean getPlayed() {
 		return played;
 	}
@@ -126,13 +93,4 @@ public class CategoryEntry {
 	public void setPlayed(Boolean played) {
 		this.played = played;
 	}
-
-	public Integer getRemaining() {
-		return remaining;
-	}
-
-	public void setRemaining(Integer remaining) {
-		this.remaining = remaining;
-	}
-
 }
